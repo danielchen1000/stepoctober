@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>October Step Challenge</title>
+    <style>
+        /* --- Basic Setup & Apple/Notion-like Styling --- */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+        :root {
+            --background-color: #f5f5f7;
+            --text-color: #1d1d1f;
+            --border-color: #ebebec;
+            --card-bg: #ffffff;
+            --accent-color: #1d1d1f; /* Black for strict B&W */
+            --light-text-color: #86868b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 50px 20px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* --- Header --- */
+        header { text-align: center; margin-bottom: 60px; }
+        header h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+        header p {
+            font-size: 1.1rem;
+            color: var(--light-text-color);
+            margin-bottom: 30px; /* Increased margin for button */
+        }
+
+        /* --- CTA Button --- */
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--card-bg);
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+        .cta-button:hover {
+            opacity: 0.8;
+        }
+
+        /* --- Animated Emoji Figure (👟) --- */
+        .notion-figure {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            bottom: 0px;
+            left: 0;
+            animation-duration: 3s;
+            animation-timing-function: ease-out;
+            animation-fill-mode: forwards;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        .notion-figure .emoji-shoe {
+            font-size: 2.5rem;
+            line-height: 1;
+            animation: bobbing-shoe 0.7s ease-in-out infinite;
+            filter: grayscale(100%);
+        }
+        @keyframes bobbing-shoe {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* --- Top 3 Race Animation Container --- */
+        .race-container {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 60px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .track {
+            position: relative;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+            height: 80px;
+        }
+        .track:last-of-type {
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        .track-info {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            font-size: 0.9rem;
+            color: var(--light-text-color);
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+        .track-info .rank { font-weight: 700; font-size: 1.1rem; color: var(--text-color); }
+        .track-info .name { font-weight: 500; color: var(--text-color); }
+        .track-info .steps { font-weight: 400; color: var(--light-text-color); }
+
+        .finish-line {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            height: 100%;
+            border-right: 2px solid var(--accent-color);
+            width: 1px;
+        }
+
+        /* --- Horizontal Movement Animations --- */
+        @keyframes slide-first {
+            from { left: 0; } to { left: calc(100% - 30px); }
+        }
+        @keyframes slide-second {
+            from { left: 0; } to { left: calc(85% - 30px); }
+        }
+        @keyframes slide-third {
+            from { left: 0; } to { left: calc(70% - 30px); }
+        }
+        .track.first .notion-figure { animation-name: slide-first; }
+        .track.second .notion-figure { animation-name: slide-second; }
+        .track.third .notion-figure { animation-name: slide-third; }
+        
+        /* --- Vertical Full Leaderboard --- */
+        .full-leaderboard { margin-bottom: 60px; }
+        .full-leaderboard h2, .faq-section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .full-leaderboard ol {
+            list-style: none;
+            padding: 0;
+            counter-reset: leaderboard-counter 3;
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+        .full-leaderboard li {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            border-bottom: 1px solid var(--border-color);
+            counter-increment: leaderboard-counter;
+            transition: background-color 0.2s ease;
+        }
+        .full-leaderboard li:last-child { border-bottom: none; }
+        .full-leaderboard li:hover { background-color: #fcfcfc; }
+        .full-leaderboard li::before {
+            content: counter(leaderboard-counter) ".";
+            font-weight: 500;
+            min-width: 30px;
+            text-align: left;
+            margin-right: 20px;
+            color: var(--light-text-color);
+        }
+        .full-leaderboard .name { flex-grow: 1; font-weight: 500; font-size: 1.05rem; }
+        .full-leaderboard .steps { font-weight: 500; color: var(--accent-color); font-size: 1.05rem; }
+
+        /* --- FAQ Section --- */
+        .faq-section { margin-bottom: 50px; }
+        .faq-section details {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            overflow: hidden; /* Important for border-radius */
+        }
+        .faq-section summary {
+            font-weight: 500;
+            font-size: 1.05rem;
+            padding: 20px 25px;
+            cursor: pointer;
+            list-style: none; /* Removes default triangle */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .faq-section summary::-webkit-details-marker { display: none; } /* Safari */
+        .faq-section summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--light-text-color);
+            transition: transform 0.2s ease;
+        }
+        .faq-section details[open] summary::after {
+            transform: rotate(45deg);
+        }
+        .faq-section .faq-answer {
+            padding: 0 25px 20px;
+            color: var(--light-text-color);
+            line-height: 1.6;
+        }
+
+        /* --- Notion-style Callout Block --- */
+        .callout {
+            background-color: var(--card-bg);
+            border-left: 4px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1rem;
+            color: var(--text-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin-top: 50px;
+        }
+        .callout .icon { font-size: 1.8rem; color: var(--accent-color); line-height: 1; }
+        .callout p { margin: 0; }
+
+        /* --- Footer --- */
+        footer { margin-top: 80px; font-size: 0.85rem; color: var(--light-text-color); text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>October Step Challenge</h1>
+            <p>The Final Week — Who Will Take the Crown?</p>
+            <a href="#" class="cta-button">Submit Your Weekly Steps &rarr;</a>
+        </header>
+
+        <main>
+            <section class="race-container">
+                <div class="track first">
+                    <div class="notion-figure"><span class="emoji-shoe">👟</span></div>
+                    <div class="track-info"><span class="rank">1st</span> <span class="name">Student A</span> <span class="steps">312,104 steps</span></div>
+                    <div class="finish-line"></div>
+                </div>
+                <div class="track second">
+                    <div class="notion-figure"><span class="emoji-shoe">👟</span></div>
+                    <div class="track-info"><span class="rank">2nd</span> <span class="name">Student B</span> <span class="steps">298,450 steps</span></div>
+                    <div class="finish-line"></div>
+                </div>
+                <div class="track third">
+                    <div class="notion-figure"><span class="emoji-shoe">👟</span></div>
+                    <div class="track-info"><span class="rank">3rd</span> <span class="name">Student C</span> <span class="steps">285,331 steps</span></div>
+                    <div class="finish-line"></div>
+                </div>
+            </section>
+            
+            <section class="full-leaderboard">
+                <h2>All Participants</h2>
+                <ol>
+                    <li><span class="name">Student D</span><span class="steps">250,912 steps</span></li>
+                    <li><span class="name">Student E</span><span class="steps">245,678 steps</span></li>
+                    <li><span class="name">Student F</span><span class="steps">231,050 steps</span></li>
+                    <li><span class="name">Student G</span><span class="steps">225,489 steps</span></li>
+                    <li><span class="name">Student H</span><span class="steps">210,111 steps</span></li>
+                    <li><span class="name">Student I</span><span class="steps">198,765 steps</span></li>
+                    <li><span class="name">Student J</span><span class="steps">180,543 steps</span></li>
+                    <li><span class="name">Student K</span><span class="steps">165,210 steps</span></li>
+                </ol>
+            </section>
+
+            <section class="faq-section">
+                <h2>Frequently Asked Questions</h2>
+                <details>
+                    <summary>How are steps counted?</summary>
+                    <p class="faq-answer">Steps are collected weekly via the submission form linked above. Please use data from your phone's health app (Apple Health, Google Fit) or your fitness tracker (Fitbit, Garmin, etc.).</p>
+                </details>
+                <details>
+                    <summary>When are the rankings updated?</summary>
+                    <p class="faq-answer">The leaderboard is updated every Monday morning by 9:00 AM PST with the previous week's results. Be sure to submit your steps before the deadline!</p>
+                </details>
+                <details>
+                    <summary>What is the prize for the winner?</summary>
+                    <p class="faq-answer">The top 3 participants will receive ultimate bragging rights and a special mention in the class-wide newsletter at the end of the month.</p>
+                </details>
+                <details>
+                    <summary>What is lefe?</summary>
+                    <p class="faq-answer">Thasdfasdfase</p>
+                </details>
+            </section>
+
+            <div class="callout">
+                <span class="icon">💡</span>
+                <p>Keep those steps coming! Every stride counts towards a healthier you and a stronger class.</p>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2025 October Step Challenge. Last updated: October 7, 2025</p>
+        </footer>
+    </div>
+
+</body>
+</html>
