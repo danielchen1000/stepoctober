@@ -45,7 +45,23 @@
         header p {
             font-size: 1.1rem;
             color: var(--light-text-color);
-            margin-bottom: 30px; /* Increased margin for button */
+            margin-bottom: 30px;
+        }
+        
+        /* --- Countdown Timer --- */
+        #countdown-container {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+        #countdown-days {
+            font-weight: 700;
+            font-size: 1.2rem;
         }
 
         /* --- CTA Button --- */
@@ -247,8 +263,13 @@
     <div class="container">
         <header>
             <h1>October Step Challenge</h1>
-            <p>The Final Week — Who Will Take the Crown?</p>
-            <a href="#" class="cta-button">Submit Your Weekly Steps &rarr;</a>
+            <p>🏁</p>
+            
+            <div id="countdown-container">
+                <span id="countdown-days"></span> days left to compete!
+            </div>
+            
+            <a href="https://forms.office.com/r/jq8AMKPpMu" class="cta-button" target="_blank" rel="noopener noreferrer">Submit Your Weekly Steps &rarr;</a>
         </header>
 
         <main>
@@ -271,7 +292,7 @@
             </section>
             
             <section class="full-leaderboard">
-                <h2>All Participants</h2>
+                <h2>Top 10</h2>
                 <ol>
                     <li><span class="name">Student D</span><span class="steps">250,912 steps</span></li>
                     <li><span class="name">Student E</span><span class="steps">245,678 steps</span></li>
@@ -280,7 +301,6 @@
                     <li><span class="name">Student H</span><span class="steps">210,111 steps</span></li>
                     <li><span class="name">Student I</span><span class="steps">198,765 steps</span></li>
                     <li><span class="name">Student J</span><span class="steps">180,543 steps</span></li>
-                    <li><span class="name">Student K</span><span class="steps">165,210 steps</span></li>
                 </ol>
             </section>
 
@@ -291,27 +311,64 @@
                     <p class="faq-answer">Steps are collected weekly via the submission form linked above. Please use data from your phone's health app (Apple Health, Google Fit) or your fitness tracker (Fitbit, Garmin, etc.).</p>
                 </details>
                 <details>
+                    <summary>How are y'all verifying steps? Seems easily cheatable.</summary>
+                    <p class="faq-answer">Steps are verified with a screenshot from your step tracker. The screenshot must clearly show the dates and your total step count for that week. Please make sure the data is easy to read. Submissions without a clear screenshot won't be counted. We're keeping this a friendly competition, so we're operating on the honor system!</p>
+                </details>
+                <details>
                     <summary>When are the rankings updated?</summary>
-                    <p class="faq-answer">The leaderboard is updated every Monday morning by 9:00 AM PST with the previous week's results. Be sure to submit your steps before the deadline!</p>
+                    <p class="faq-answer">The leaderboard is updated every Monday with the previous week's results. Be sure to submit your steps before the deadline!</p>
+                </details>
+                <details>
+                    <summary>Is this related to USMLE STEP?</summary>
+                    <p class="faq-answer">...no</p>
                 </details>
                 <details>
                     <summary>What is the prize for the winner?</summary>
-                    <p class="faq-answer">The top 3 participants will receive ultimate bragging rights and a special mention in the class-wide newsletter at the end of the month.</p>
+                    <p class="faq-answer">Top 3 receive Sodexo giftcards</p>
                 </details>
                 <details>
-                    <summary>What is Winter's Formula?</summary>
-                    <p class="faq-answer">Expected pCO2 = (1.5 x [HCO3-]) + 8 ± 2</p>
+                    <summary>A 24-year-old medical student in a competitive step challenge presents to the ER with complaints of severe muscle pain and dark urine after an intense month of walking. Urinalysis shows a positive heme but no red blood cells. What is the most likely diagnosis?
+                    </summary>
+                    <p class="faq-answer">Rhabdomyolysis, please stay hydrated and know your limits</p>
                 </details>
             </section>
 
+        
         </main>
         
         <footer>
-            <p>&copy;  Last updated: October 7, 2025</p>
+            <p>&copy; c/o 2027 class board. Last updated: October 7, 2025</p>
         </footer>
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set the date the competition ends
+            const endDate = new Date('2025-10-31T23:59:59');
+
+            // Get the HTML element where the number of days will be displayed
+            const daysElement = document.getElementById('countdown-days');
+            const countdownContainer = document.getElementById('countdown-container');
+
+            // Get the current date and time
+            const now = new Date();
+
+            // Calculate the difference in milliseconds
+            const difference = endDate - now;
+
+            // Check if the competition is still ongoing
+            if (difference > 0) {
+                // Convert milliseconds to days and round up to the nearest whole number
+                const daysLeft = Math.ceil(difference / (1000 * 60 * 60 * 24));
+                
+                // Update the text content of the element
+                daysElement.textContent = daysLeft;
+            } else {
+                // If the competition is over, display a message
+                countdownContainer.textContent = 'The competition has ended!';
+            }
+        });
+    </script>
+
 </body>
-
 </html>
-
