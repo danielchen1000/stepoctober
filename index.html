@@ -5,6 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>October Step Challenge</title>
     <style>
+        /* --- Animated Background Shoes (Emojis) --- */
+.background-shoes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Places it behind all other content */
+    overflow: hidden;
+    pointer-events: none; /* Ensures emojis don't interfere with clicks */
+}
+
+.background-shoes span {
+    position: absolute;
+    display: block;
+    font-size: 3em; /* Larger size for background impact */
+    opacity: 0.1; /* Very subtle opacity */
+    animation: animate-shoes 25s linear infinite;
+    bottom: -150px; /* Start below the screen */
+    filter: grayscale(100%); /* Keeps them black and white */
+}
+
+/* Individual animation properties for variety */
+.background-shoes span:nth-child(1) { left: 25%; animation-delay: 0s; }
+.background-shoes span:nth-child(2) { left: 10%; font-size: 2em; animation-delay: 2s; animation-duration: 12s; }
+.background-shoes span:nth-child(3) { left: 70%; animation-delay: 4s; }
+.background-shoes span:nth-child(4) { left: 40%; font-size: 4em; animation-delay: 0s; animation-duration: 18s; }
+.background-shoes span:nth-child(5) { left: 65%; animation-delay: 0s; }
+.background-shoes span:nth-child(6) { left: 75%; font-size: 5em; animation-delay: 3s; }
+.background-shoes span:nth-child(7) { left: 35%; font-size: 6em; animation-delay: 7s; }
+.background-shoes span:nth-child(8) { left: 50%; font-size: 2.5em; animation-delay: 15s; animation-duration: 45s; }
+.background-shoes span:nth-child(9) { left: 20%; font-size: 1.5em; animation-delay: 2s; animation-duration: 35s; }
+.background-shoes span:nth-child(10) { left: 85%; font-size: 5.5em; animation-delay: 0s; animation-duration: 11s; }
+
+
+@keyframes animate-shoes {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.1;
+    }
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+    }
+}
         /* --- Basic Setup & Apple/Notion-like Styling --- */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
 
@@ -259,7 +304,18 @@
     </style>
 </head>
 <body>
-
+<div class="background-shoes">
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+    <span>👟</span>
+</div>
     <div class="container">
         <header>
             <h1>October Step Challenge</h1>
@@ -376,6 +432,7 @@
 
 </body>
 </html>
+
 
 
 
